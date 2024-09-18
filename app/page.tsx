@@ -1,9 +1,23 @@
-import { CustomKanban } from './CustomKanban'
+import { auth } from "@clerk/nextjs/server";
+import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+  const { userId } = await auth();
+  const isAuth = !!userId; // Check if the user is authenticated
+
   return (
-    <div className="">
-      <CustomKanban />
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      {isAuth ? (
+        <div className="text-center text-lg text-green-600">
+          Welcome! You are authenticated.
+        </div>
+      ) : (
+        <div className="text-center text-lg text-red-600">
+          <Link href='/sign-in'    >
+            login
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
