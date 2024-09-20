@@ -4,16 +4,17 @@ import { FiPlus, FiTrash } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { FaFire } from "react-icons/fa";
 
-export const CustomKanban = () => {
+export const CustomKanban = ({ data }) => {
+    console.log(data, "finally")
     return (
         <div className="h-screen w-full bg-neutral-900 text-neutral-50">
-            <Board />
+            <Board data={data} />
         </div>
     );
 };
 
-const Board = () => {
-    const [cards, setCards] = useState(DEFAULT_CARDS);
+const Board = ({ data }) => {
+    const [cards, setCards] = useState(data);
     // const [hasChecked, setHasChecked] = useState(false);
 
     // useEffect(() => {
@@ -350,48 +351,3 @@ const AddCard = ({ column, setCards }) => {
     );
 };
 
-
-const DEFAULT_CARDS = [
-    { title: "Look into render bug in dashboard", description: "Fix the issue with component rendering", priority: "HIGH", id: "1", column: "backlog" },
-    { title: "SOX compliance checklist", description: "Prepare checklist for SOX audit", priority: "MEDIUM", id: "2", column: "backlog" },
-    { title: "[SPIKE] Migrate to Azure", description: "Explore options for cloud migration", priority: "LOW", id: "3", column: "backlog" },
-    { title: "Document Notifications service", description: "Write documentation for the notifications service", priority: "LOW", id: "4", column: "backlog" },
-    { title: "Research DB options for new microservice", description: "Explore database technologies for new microservice", priority: "MEDIUM", id: "5", column: "todo" },
-    { title: "Postmortem for outage", description: "Prepare postmortem report", priority: "HIGH", id: "6", column: "todo" },
-    { title: "Sync with product on Q3 roadmap", description: "Discuss Q3 roadmap with product team", priority: "MEDIUM", id: "7", column: "todo" },
-    { title: "Refactor context providers to use Zustand", description: "Optimize context providers by migrating to Zustand", priority: "LOW", id: "8", column: "doing" },
-    { title: "Add logging to daily CRON", description: "Implement logging for CRON jobs", priority: "LOW", id: "9", column: "doing" },
-    { title: "Set up DD dashboards for Lambda listener", description: "Create dashboards for monitoring", priority: "HIGH", id: "10", column: "done" },
-];
-
-
-// const DEFAULT_CARDS = [
-
-//     // BACKLOG
-//     { title: "Look into render bug in dashboard", id: "1", column: "backlog" },
-//     { title: "SOX compliance checklist", id: "2", column: "backlog" },
-//     { title: "[SPIKE] Migrate to Azure", id: "3", column: "backlog" },
-//     { title: "Document Notifications service", id: "4", column: "backlog" },
-//     // TODO
-//     {
-//         title: "Research DB options for new microservice",
-//         id: "5",
-//         column: "todo",
-//     },
-//     { title: "Postmortem for outage", id: "6", column: "todo" },
-//     { title: "Sync with product on Q3 roadmap", id: "7", column: "todo" },
-
-//     // DOING
-//     {
-//         title: "Refactor context providers to use Zustand",
-//         id: "8",
-//         column: "doing",
-//     },
-//     { title: "Add logging to daily CRON", id: "9", column: "doing" },
-//     // DONE
-//     {
-//         title: "Set up DD dashboards for Lambda listener",
-//         id: "10",
-//         column: "done",
-//     },
-// ];

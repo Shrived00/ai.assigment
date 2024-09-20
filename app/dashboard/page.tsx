@@ -1,42 +1,62 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useStore } from '../libs/store';
+import { CustomKanban } from '../CustomKanban';
 
-const Page = () => {
-    const [data, setData] = useState(null); // State to store the fetched data
-    const [loading, setLoading] = useState(true); // State for loading
+interface User {
+    id: string;
+    uniqueId: string;
+    tasks: Card[];
+}
 
-    // The uniqueId to send to the API
-    const uniqueId = 'user_2mEj3i8jsWxAUSsfp3qMdqQo9UA';
+interface Card {
+    title: string;
+    description: string;
+    priority: 'HIGH' | 'MEDIUM' | 'LOW';
+    id: string;
+    column: string;
+}
 
-    // Fetch data from the API on component mount
+const Page: React.FC = () => {
+    const { userId } = useStore();
+    const [data, setData] = useState<User | null>(null);
+    const [uniqueId, setUniqueID] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (userId) {
+            setUniqueID(userId);
+        }
+    }, [userId]);
+
     useEffect(() => {
         const fetchData = async () => {
+            if (!uniqueId) return;
+
+            setLoading(true);
             try {
                 const response = await axios.post('/api/getData', { uniqueId });
-                setData(response.data); // Store data in state
+                setData(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
-                setLoading(false); // Turn off loading after the request completes
+                setLoading(false);
             }
         };
 
         fetchData();
-    }, []); // Empty dependency array ensures this runs once when the component mounts
+    }, [uniqueId]);
 
     if (loading) {
-        return <div>Loading...</div>; // Show a loading message while fetching data
+        return <div>Loading...</div>;
     }
+
+
 
     return (
         <div>
-            <h1>Fetched Data</h1>
-            {data ? (
-                <pre>{JSON.stringify(data, null, 2)}</pre> // Display the fetched data in a readable format
-            ) : (
-                <p>No data available</p>
-            )}
+            <CustomKanban data={data?.tasks} />
         </div>
     );
 };
