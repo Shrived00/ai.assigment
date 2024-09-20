@@ -27,6 +27,10 @@ const Page: React.FC = () => {
     useEffect(() => {
         if (userId) {
             setUniqueID(userId);
+            localStorage.setItem("uid", JSON.stringify({ userId }));
+        } else {
+            const uid = JSON.parse(localStorage.getItem("uid") ? localStorage.getItem("uid")!.toString() : "{}");
+            setUniqueID(uid.userId);
         }
     }, [userId]);
 

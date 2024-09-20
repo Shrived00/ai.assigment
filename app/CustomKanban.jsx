@@ -1,37 +1,35 @@
 "use client"
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FiPlus, FiTrash } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { FaFire } from "react-icons/fa";
+import 'react-awesome-button/dist/styles.css';
+import { AwesomeButtonProgress } from "react-awesome-button";
+import { UserButton } from "@clerk/nextjs";
+
+
 
 export const CustomKanban = ({ data }) => {
     console.log(data, "finally")
     return (
-        <div className="h-screen w-full bg-neutral-900 text-neutral-50">
+        <div className=" relative h-screen w-full bg-neutral-900 text-neutral-50">
             <Board data={data} />
+            <div className="absolute bottom-10 left-10 w">
+                <AwesomeButtonProgress type="primary" onPress={async (element, next) => {
+                    // await for something then call
+                    next();
+                }} style={{ width: '100px' }}>Save</AwesomeButtonProgress>
+                <UserButton />
+            </div>
+
+
+
         </div>
     );
 };
 
 const Board = ({ data }) => {
     const [cards, setCards] = useState(data);
-    // const [hasChecked, setHasChecked] = useState(false);
-
-    // useEffect(() => {
-    //     if (hasChecked) {
-    //         localStorage.setItem('cards', JSON.stringify(cards));
-    //     }
-    // }, [cards, hasChecked]);
-
-    // useEffect(() => {
-    //     const cardData = localStorage.getItem('cards');
-    //     setCards(cardData ? JSON.parse(cardData) : []);
-
-    //     setHasChecked(true);
-    // }, []);
-
-
-
 
     return (
         <div className="flex h-full w-full gap-3 overflow-scroll p-12">
