@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default async function Home() {
   const { userId } = await auth();
-  const isAuth = !!userId; // Check if the user is authenticated
+  const isAuth = !!userId;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
