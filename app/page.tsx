@@ -7,12 +7,13 @@ const Home = async () => {
   const isAuth = !!userId;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-neutral-900  text-white">
       {isAuth ? (
         <ClientComponent userId={userId} />
       ) : (
-        <div className="text-center text-lg text-red-600">
-          <Link href="/sign-in">Login</Link>
+        <div className="text-center text-lg flex flex-col gap-5">
+          <div className="">Welcome !!</div>
+          <Link href="/sign-in" className="border p-1  bg-blue-700 rounded-lg">Login</Link>
         </div>
       )}
     </div>

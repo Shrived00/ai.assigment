@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useStore } from '../libs/store';
-import { CustomKanban } from '../CustomKanban';
+import { CustomKanban } from '../components/CustomKanban';
+import { BeatLoader } from 'react-spinners';
 
 interface User {
     id: string;
@@ -42,6 +43,7 @@ const Page: React.FC = () => {
             try {
                 const response = await axios.post('/api/getData', { uniqueId });
                 setData(response.data);
+                console.log(response.data)
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
@@ -53,14 +55,16 @@ const Page: React.FC = () => {
     }, [uniqueId]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div className='flex h-screen items-center justify-center'>
+            <BeatLoader color='#FFFFFF' />
+        </div>;
     }
 
 
 
     return (
         <div>
-            <CustomKanban data={data?.tasks} />
+            <CustomKanban data={data?.tasks} uniqueId={uniqueId} />
         </div>
     );
 };
